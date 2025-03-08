@@ -1,0 +1,42 @@
+.step-navigator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 20px 0;
+  padding: 10px;
+  background-color: #f9fafb;
+  border-radius: 8px;
+}
+
+.nav-button {
+  background: none;
+  border: none;
+  font-size: 1.25rem;
+  padding: 5px 10px;
+  cursor: pointer;
+  color: #4b5563;
+  transition: color 0.2s;
+}
+
+.nav-button:hover:not(:disabled) {
+  color: #1f2937;
+}
+
+.nav-button:disabled {
+  color: #d1d5db;
+  cursor: not-allowed;
+}
+
+.step-indicator {
+  margin: 0 15px;
+  padding: 5px 10px;
+  background-color: white;
+  border-radius: 4px;
+  font-size: 0.875rem;
+  color: #111827;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.step-navigator .play-pause-button {
+  margin-left: 10px; /* Adjust spacing as needed */
+}

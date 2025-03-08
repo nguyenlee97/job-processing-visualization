@@ -1,0 +1,158 @@
+.visualization-container {
+  margin: 20px 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+    Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+.jobs-container {
+  margin-bottom: 25px; /* Increased margin */
+}
+
+.jobs-container h4, .machines-container h4 {
+    font-size: 1.5rem; /* Larger and bolder section titles */
+    font-weight: bold;
+    color: #333; /* Darker color for titles */
+    margin-bottom: 15px; /* More space below titles */
+}
+
+
+.jobs-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px; /* Increased gap */
+  justify-content: flex-start; /* Align jobs to the start */
+}
+
+.job-card {
+  border: 1px solid #ddd;
+  border-radius: 8px; /* More rounded corners */
+  padding: 12px 15px; /* Increased padding */
+  min-width: 90px; /* Slightly wider */
+  background-color: #fff; /* Pure white background */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08); /* Soft shadow for depth */
+  transition: transform 0.2s ease-in-out; /* Hover effect */
+}
+
+.job-card:hover {
+  transform: translateY(-3px); /* Lift on hover */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.12); /* Stronger shadow on hover */
+}
+
+.job-header {
+  font-weight: 600; /* Slightly less bold */
+  margin-bottom: 6px; /* More space */
+  color: #2c3e50; /* Darker header color */
+}
+
+.job-time {
+  font-size: 0.9rem;
+  color: #777; /* Muted time color */
+}
+
+.machines-container {
+  overflow-x: auto; /* Keep scrollable if needed */
+  padding-bottom: 10px; /* Add some padding at the bottom */
+}
+
+.machine-layout {
+  display: table;
+  border-collapse: separate; /* Important for rounded corners on table */
+  border-spacing: 0; /* Remove spacing between cells */
+  min-width: 100%;
+  border-radius: 8px; /* Rounded corners for the whole table */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08); /* Shadow for the table */
+  border: 1px solid #ddd; /* Add a light border to the table */
+}
+
+.machine-row {
+  display: table-row;
+  background-color: white; /* White background for rows */
+}
+
+.machine-row:nth-child(even) {
+  background-color: #f9f9f9; /* Slightly different background for even rows */
+}
+
+.header-row {
+  background-color: #f0f0f0; /* Lighter header background */
+  font-weight: bold;
+  color: #555; /* Darker header text color */
+}
+
+.header-cell {
+    padding: 12px; /* More padding for header cells */
+    border-bottom: 2px solid #ddd; /* Stronger bottom border for headers */
+    text-align: left; /* Align header text to left */
+}
+
+
+.machine-cell {
+  display: table-cell;
+  padding: 12px; /* Increased cell padding */
+  border-bottom: 1px solid #eee; /* Lighter bottom border */
+  border-right: 1px solid #eee; /* Lighter right border */
+  vertical-align: top;
+  font-size: 0.95rem; /* Slightly larger font in cells */
+}
+
+/* Remove right border from last cell in each row */
+.machine-row .machine-cell:last-child {
+    border-right: none;
+}
+/* REMOVE THIS LINE - It was causing the bottom border issue */
+/* .machine-row:last-child .machine-cell {
+    border-bottom: none;
+} */
+
+/* Add bottom border to the last row's cells to visually close the table */
+.machine-row:last-child .machine-cell {
+    border-bottom: 1px solid #ddd; /* Or #eee if you want a lighter border like the others */
+}
+
+
+.machine-name-cell {
+  font-weight: 600; /* Slightly less bold */
+  background-color: #f8f9fa; /* Lighter machine name cell background */
+  color: #34495e; /* Darker machine name color */
+  border-right: 2px solid #ddd; /* Stronger right border for machine name cell */
+}
+
+.window-cell {
+  vertical-align: top;
+}
+
+.window-time {
+  font-size: 0.85rem;
+  color: #777;
+  margin-bottom: 6px; /* More space */
+}
+
+.window-jobs {
+  font-size: 1rem; /* Slightly larger job font */
+}
+
+.window-job-item {
+  margin: 3px 0; /* More vertical margin */
+  padding: 4px 6px; /* More padding */
+  background-color: #e6f7ff;
+  border-radius: 5px; /* More rounded job items */
+  color: #333; /* Darker job item text */
+  border: 1px solid #ccebff; /* Light blue border for job items */
+}
+
+.window-empty {
+  color: #aaa; /* Lighter empty text */
+  font-style: italic;
+}
+
+.agent-position {
+  background-color: rgba(255, 235, 59, 0.15); /* Softer yellow background */
+  border: 2px solid #ffc107; /* Keep yellow border, maybe adjust color */
+  box-shadow: 0 0 8px #ffc107; /* Add a glow effect */
+}
+
+.empty-window {
+  background-color: #f8f8f8;
+  color: #ccc;
+  text-align: center;
+}

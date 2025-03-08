@@ -1,0 +1,156 @@
+.step-detail-container {
+  padding: 20px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  background-color: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  font-family: 'Arial', sans-serif; /* Optional: Set a default font family */
+}
+
+.step-detail-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+.step-detail-header h2 {
+    font-size: 1.75rem; /* Increased size for header */
+    font-weight: bold; /* Bold font for header */
+    margin: 0; /* Reset default margin for h2 */
+}
+
+.step-type {
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.step-type.normal-step {
+  background-color: #e3f2fd;
+  color: #1976d2;
+}
+
+.step-type.skip-step {
+  background-color: #fff8e1;
+  color: #ff8f00;
+}
+
+.step-type.final-step {
+  background-color: #e8f5e9;
+  color: #388e3c;
+}
+
+.step-type.terminated-step-because-out-of-upper-bound {
+  background-color: #ffebee;
+  color: #d32f2f;
+}
+
+.step-metrics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.metric-card {
+  flex: 1;
+  min-width: 120px;
+  padding: 12px;
+  border-radius: 6px;
+  background-color: #f9fafb;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.metric-label {
+  font-size: 0.75rem;
+  color: #6b7280;
+  margin-bottom: 4px;
+}
+
+.metric-value {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #111827;
+}
+
+.step-status {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-bottom: 24px;
+  padding: 16px;
+  background-color: #f9fafb;
+  border-radius: 6px;
+}
+
+.step-status h3, .agent-positions h3, .jobs-container h4, .machines-container h4 {
+    font-size: 1.35rem; /* Slightly bigger for section headings */
+    font-weight: bold; /* Bold for section headings */
+    margin-top: 0;
+    margin-bottom: 15px; /* Add some margin below headings */
+}
+
+
+.status-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px; /* Add spacing between status items */
+}
+
+.status-label {
+  font-weight: 500;
+  color: #4b5563;
+}
+
+.status-value {
+  font-weight: 600;
+}
+
+.status-true {
+  color: #059669;
+}
+
+.status-false {
+  color: #dc2626;
+}
+
+.direction-value {
+  padding: 4px 8px;
+  background-color: #f3f4f6;
+  border-radius: 4px;
+  font-family: monospace;
+  color: #1f2937;
+}
+
+.agent-positions {
+  margin-bottom: 24px;
+  padding: 15px 0; /* Add padding top and bottom */
+  border-top: 1px solid #eee; /* Separator line */
+}
+
+.agent-positions-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.agent-position-item {
+  padding: 6px 12px;
+  background-color: #f3f4f6;
+  border-radius: 4px;
+}
+
+.agent-label {
+  font-weight: 500;
+  margin-right: 6px;
+}
+
+.agent-position-value {
+  font-weight: 600;
+  color: #1f2937;
+}
