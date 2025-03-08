@@ -40,7 +40,7 @@ export async function processDataInChunks(
  * @param data The EnvironmentStepData object
  * @returns Object containing various statistics about the data
  */
-export function analyzeEnvironmentData(data: EnvironmentStepData) {
+ export function analyzeEnvironmentData(data: EnvironmentStepData) {
   if (!data) return null;
   
   const stepCount = Object.keys(data).length;

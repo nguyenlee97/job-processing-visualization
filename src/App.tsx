@@ -15,33 +15,72 @@ const MainContent: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [loadingProgress, setLoadingProgress] = useState(0);
   const [showAnalytics, setShowAnalytics] = useState(false);
+  const [availableFiles, setAvailableFiles] = useState<string[]>([]);
+  const [selectedFile, setSelectedFile] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchFileList = async () => {
+      try {
+        const response = await fetch('/data/data/list_files.json'); // Assuming a backend endpoint or a static json listing files
+        if (response.ok) {
+          const fileList = await response.json();
+          if (Array.isArray(fileList)) {
+            const jsonFiles = fileList.filter(file => file.toLowerCase().endsWith('.json'));
+            setAvailableFiles(jsonFiles);
+            if (jsonFiles.length > 0) {
+              setSelectedFile(jsonFiles[0]); // Select the first JSON file by default
+            }
+          } else {
+            console.error("File list is not an array:", fileList);
+            setAvailableFiles([]);
+          }
+        } else if (response.status === 404) {
+          // If list_files.json is not found, assume files are directly in /data and try to load 'environment-steps.json' as fallback
+          console.warn("File list endpoint not found, falling back to default and assuming files are in /data/");
+          setAvailableFiles(['environment-steps.json']); // Fallback to default if no file list
+          setSelectedFile('environment-steps.json');
+        }
+         else {
+          console.error('Failed to fetch file list:', response.status, response.statusText);
+          setAvailableFiles([]);
+        }
+      } catch (error) {
+        console.error('Error fetching file list:', error);
+        setAvailableFiles([]);
+      }
+    };
+
+    fetchFileList();
+  }, []);
 
   useEffect(() => {
     const loadData = async () => {
+      if (!selectedFile) return; // Don't load data if no file selected
+
       try {
         setIsLoading(true);
-        // Assuming the JSON file is in the public directory
-        const response = await fetch('/data/environment-steps.json');
+        setLoadingProgress(0); // Reset loading progress on new file load
+        const response = await fetch(`/data/data/${selectedFile}`);
         if (!response.ok) {
-          throw new Error('Failed to fetch data');
+          throw new Error(`Failed to fetch data from ${selectedFile}`);
         }
-        
+
         const jsonData = await response.json();
-        
+
         // Process the data in chunks to avoid freezing the UI
         await processDataInChunks(
-          jsonData, 
-          100, 
+          jsonData,
+          100,
           (processed, total) => {
             setLoadingProgress(Math.floor((processed / total) * 100));
           }
         );
-        
+
         dispatch({ type: 'SET_DATA', payload: jsonData });
       } catch (err) {
-        dispatch({ 
-          type: 'SET_ERROR', 
-          payload: err instanceof Error ? err.message : 'An unknown error occurred' 
+        dispatch({
+          type: 'SET_ERROR',
+          payload: err instanceof Error ? err.message : `An unknown error occurred loading ${selectedFile}`
         });
       } finally {
         setIsLoading(false);
@@ -49,14 +88,18 @@ const MainContent: React.FC = () => {
     };
 
     loadData();
-  }, [dispatch]);
+  }, [dispatch, selectedFile]); // Depend on selectedFile to reload data when file changes
 
   const handleSelectStep = (stepKey: string) => {
     dispatch({ type: 'SET_CURRENT_STEP', payload: stepKey });
   };
-  
+
   const toggleAnalytics = () => {
     setShowAnalytics(prev => !prev);
+  };
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedFile(event.target.value);
   };
 
   if (isLoading) {
@@ -67,8 +110,8 @@ const MainContent: React.FC = () => {
           Loading environment data... {loadingProgress}%
         </div>
         <div className="loading-progress-bar">
-          <div 
-            className="loading-progress-fill" 
+          <div
+            className="loading-progress-fill"
             style={{ width: `${loadingProgress}%` }}
           ></div>
         </div>
@@ -81,7 +124,16 @@ const MainContent: React.FC = () => {
   }
 
   if (!state.data) {
-    return <div className="error-container">No data available</div>;
+    return (
+      <div className="no-data-container">
+        <h2>No data loaded.</h2>
+        {availableFiles.length > 0 ? (
+          <p>Please select a JSON data file from the dropdown to load environment steps.</p>
+        ) : (
+          <p>No JSON data files found in the data directory or listing is not configured.</p>
+        )}
+      </div>
+    );
   }
 
   return (
@@ -89,7 +141,18 @@ const MainContent: React.FC = () => {
       <header className="app-header">
         <h1>Environment Step Visualizer</h1>
         <div className="header-actions">
-          <button 
+          <div>
+            <select
+              value={selectedFile || ''}
+              onChange={handleFileChange}
+              className="file-selector"
+            >
+              {availableFiles.map((file) => (
+                <option key={file} value={file}>{file}</option>
+              ))}
+            </select>
+          </div>
+          <button
             className={`analytics-toggle-button ${showAnalytics ? 'active' : ''}`}
             onClick={toggleAnalytics}
           >
@@ -118,9 +181,9 @@ const MainContent: React.FC = () => {
                 const stepKey = state.filteredStepKeys[index];
                 const stepInfo = state.data![stepKey];
                 const isSelected = stepKey === state.currentStepKey;
-                
+
                 return (
-                  <div 
+                  <div
                     style={style}
                     className={`step-item ${isSelected ? 'selected' : ''}`}
                     onClick={() => handleSelectStep(stepKey)}
@@ -142,7 +205,7 @@ const MainContent: React.FC = () => {
 
         <main className="step-detail-panel">
           {currentStep ? (
-            <StepDetail 
+            <StepDetail
               stepKey={currentStep.key}
               stepInfo={currentStep.stepInfo}
             />

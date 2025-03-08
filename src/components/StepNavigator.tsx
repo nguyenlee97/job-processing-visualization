@@ -57,7 +57,7 @@ const StepNavigator: React.FC = () => {
         } else {
           setIsPlaying(false);
         }
-      }, 1000);
+      }, 100);
     }
     return () => clearInterval(intervalRef.current || 0);
   }, [isPlaying, state.currentStepKey, state.filteredStepKeys, dispatch]);

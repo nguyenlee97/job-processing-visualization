@@ -21,7 +21,8 @@ export type StepType =
   | "Normal step"
   | "Skip step"
   | "Final step"
-  | "Terminated step because out of upper bound";
+  | "Terminated step because out of upper bound"
+  | 'Terminated skip step because out of upper bound';
 
 /**
  * Interface for the information related to a single step in the environment.
