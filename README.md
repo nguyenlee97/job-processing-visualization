@@ -1,11 +1,5 @@
 # React + TypeScript + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
-
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
 ![Alt text](/public/pixai-1855069599191371389-1.png)
 
@@ -21,4 +15,45 @@ npm i
 npm run dev
 
 ```
+## Project Tree
+
+Directory structure:
+└── nguyenlee97-job-processing-visualization/
+    ├── eslint.config.js
+    ├── index.html
+    ├── vite.config.ts
+    ├── public/
+    │   └── data/
+    │       └── process_json.cjs
+    ├── src/
+    │   ├── App.css
+    │   ├── App.tsx
+    │   ├── index.css
+    │   ├── main.tsx
+    │   ├── vite-env.d.ts
+    │   ├── assets/
+    │   ├── components/
+    │   │   ├── AnalyticsDashboard.css
+    │   │   ├── AnalyticsDashboard.tsx
+    │   │   ├── DataLoader.tsx
+    │   │   ├── StepDetail.css
+    │   │   ├── StepDetail.tsx
+    │   │   ├── StepList.tsx
+    │   │   ├── StepNavigator.css
+    │   │   ├── StepNavigator.tsx
+    │   │   ├── StepTypeFilter.css
+    │   │   ├── StepTypeFilter.tsx
+    │   │   ├── useChunkedData.tsx
+    │   │   └── visualization/
+    │   │       ├── MachineJobVisualization.css
+    │   │       └── MachineJobVisualization.tsx
+    │   ├── context/
+    │   │   └── EnvironmentContext.tsx
+    │   ├── types/
+    │   │   └── index.ts
+    │   └── utils/
+    │       └── dataProcessing.ts
+    └── .vite/
+        └── deps_temp_04e0be4c/
+
 
