@@ -35,6 +35,12 @@ npm install
 
 # Process sample data (optional)
 node public/data/process_json.cjs input.json 100 output
+
+# Make sure public/data/data folder have environment-steps.json(Manual Input) or list-files.json(Auto-generated)
+
+# Run the application
+npm run dev
+
 ```
 
 ## Usage
