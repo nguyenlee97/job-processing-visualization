@@ -18,6 +18,7 @@ const StepTypeFilter: React.FC = () => {
       </label>
       <select
         id="step-type-filter"
+        style={{marginLeft: "1rem"}}
         className="step-type-select"
         value={state.filterType || 'all'}
         onChange={handleFilterChange}
