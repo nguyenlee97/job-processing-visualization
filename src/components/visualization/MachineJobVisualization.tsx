@@ -1,4 +1,3 @@
-// src/components/visualization/MachineJobVisualization.tsx
 import React from 'react';
 import { Job, Machine } from '../../types/index';
 import './MachineJobVisualization.css';
@@ -7,15 +6,45 @@ interface MachineJobVisualizationProps {
   machines: Machine[];
   jobs: Job[];
   agentPositions: number[]; // Now agentPositions is window index (1-based)
+  currentDirection?: string; // Add current direction to track accessed job
 }
 
 export const MachineJobVisualization: React.FC<MachineJobVisualizationProps> = ({
   machines,
   jobs,
   agentPositions,
+  currentDirection,
 }) => {
   // Calculate max window count across all machines for grid layout
   const maxWindowCount = Math.max(...machines.map(m => m.machine_window.length));
+
+  // Parse the direction to identify the accessed job (if any)
+  const getAccessedJobIndex = (): number | null => {
+    if (!currentDirection) return null;
+
+    // Handle different direction formats
+    if (currentDirection.startsWith('skip-')) {
+      return null; // No job is accessed when skipping
+    } else if (currentDirection.endsWith('-full')) {
+      const parts = currentDirection.split('-');
+      if (parts.length >= 2) {
+        return parseInt(parts[0], 10);
+      }
+    } else {
+      const parts = currentDirection.split('-');
+      if (parts.length >= 1) {
+        return parseInt(parts[0], 10);
+      }
+    }
+    return null;
+  };
+
+  const accessedJobIndex = getAccessedJobIndex();
+
+  // Check if a job has zero time (is empty)
+  const isJobEmpty = (job: Job): boolean => {
+    return job.job_time === 0;
+  };
 
   return (
     <div className="visualization-container">
@@ -25,12 +54,20 @@ export const MachineJobVisualization: React.FC<MachineJobVisualizationProps> = (
       <div className="jobs-container">
         <h4>Available Jobs</h4>
         <div className="jobs-grid">
-          {jobs.map((job, index) => (
-            <div key={job.job_name} className="job-card">
-              <div className="job-header">{job.job_name}</div>
-              <div className="job-time">Time: {job.job_time}</div>
-            </div>
-          ))}
+          {jobs.map((job, index) => {
+            const isEmpty = isJobEmpty(job);
+            const isAccessed = accessedJobIndex === index;
+            
+            return (
+              <div 
+                key={job.job_name} 
+                className={`job-card ${isEmpty ? 'job-empty' : ''} ${isAccessed ? 'job-accessed' : ''}`}
+              >
+                <div className="job-header">{job.job_name}</div>
+                <div className="job-time">Time: {job.job_time}</div>
+              </div>
+            );
+          })}
         </div>
       </div>
 
@@ -72,21 +109,38 @@ export const MachineJobVisualization: React.FC<MachineJobVisualizationProps> = (
                   const isAgentHere = (windowIndex + 1) === currentAgentWindow && currentAgentWindow !== 0; // Compare with 1-based index and ensure it's not 0 (no window)
                   const jobsInWindow = window.job_in_window;
 
+                  // Check if any job in this window is the currently accessed job
+                  const hasAccessedJob = currentDirection && 
+                                         accessedJobIndex !== null && 
+                                         jobsInWindow.some(job => 
+                                           jobs[accessedJobIndex] && 
+                                           job.job_name === jobs[accessedJobIndex].job_name);
+
                   return (
                     <div
                       key={windowIndex}
-                      className={`machine-cell window-cell ${isAgentHere ? 'agent-position' : ''}`}
+                      className={`machine-cell window-cell ${isAgentHere ? 'agent-position' : ''} ${hasAccessedJob ? 'window-accessed' : ''}`}
                     >
                       <div className="window-time">
                         Remaining: {window.remaining_time}
                       </div>
                       <div className="window-jobs">
                         {jobsInWindow.length > 0 ? (
-                          jobsInWindow.map(job => (
-                            <div key={job.job_name} className="window-job-item">
-                              {job.job_name} ({job.job_time})
-                            </div>
-                          ))
+                          jobsInWindow.map(job => {
+                            // Determine if this specific job is the accessed one
+                            const isJobAccessed = accessedJobIndex !== null && 
+                                                 jobs[accessedJobIndex] && 
+                                                 job.job_name === jobs[accessedJobIndex].job_name;
+                            
+                            return (
+                              <div 
+                                key={job.job_name} 
+                                className={`window-job-item ${isJobAccessed ? 'job-accessed' : ''} ${job.job_time === 0 ? 'job-empty' : ''}`}
+                              >
+                                {job.job_name} ({job.job_time})
+                              </div>
+                            );
+                          })
                         ) : (
                           <div className="window-empty">Empty</div>
                         )}

@@ -30,12 +30,41 @@
   min-width: 90px; /* Slightly wider */
   background-color: #fff; /* Pure white background */
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08); /* Soft shadow for depth */
-  transition: transform 0.2s ease-in-out; /* Hover effect */
+  transition: transform 0.2s ease-in-out, background-color 0.3s ease; /* Hover effect */
 }
 
 .job-card:hover {
   transform: translateY(-3px); /* Lift on hover */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.12); /* Stronger shadow on hover */
+}
+
+/* Style for empty jobs */
+.job-empty {
+  background-color: #f5f5f5; /* Light gray background */
+  border: 1px dashed rgb(232, 52, 52); /* Dashed border */
+  color: #999; /* Lighter text */
+}
+
+.job-empty .job-header {
+  font-style: italic;
+  color: #999;
+}
+
+.job-empty .job-time {
+  color: #aaa;
+}
+
+/* Style for accessed jobs (based on direction) */
+.job-accessed {
+  background-color: #fffde7; /* Light yellow background */
+  border: 2px solid #ffc107; /* Yellow border */
+  box-shadow: 0 0 10px rgba(255, 193, 7, 0.3); /* Glowing effect */
+  font-weight: bold;
+  transform: scale(1.05); /* Slightly larger */
+}
+
+.job-accessed .job-header {
+  color: #f57c00; /* Orange color for header */
 }
 
 .job-header {
@@ -99,10 +128,6 @@
 .machine-row .machine-cell:last-child {
     border-right: none;
 }
-/* REMOVE THIS LINE - It was causing the bottom border issue */
-/* .machine-row:last-child .machine-cell {
-    border-bottom: none;
-} */
 
 /* Add bottom border to the last row's cells to visually close the table */
 .machine-row:last-child .machine-cell {
@@ -119,6 +144,12 @@
 
 .window-cell {
   vertical-align: top;
+  transition: background-color 0.3s ease;
+}
+
+/* Style for window that contains the accessed job */
+.window-accessed {
+  background-color: rgba(255, 248, 225, 0.4); /* Very light yellow */
 }
 
 .window-time {
@@ -138,10 +169,28 @@
   border-radius: 5px; /* More rounded job items */
   color: #333; /* Darker job item text */
   border: 1px solid #ccebff; /* Light blue border for job items */
+  transition: all 0.2s ease;
+}
+
+/* Style for empty job items within windows */
+.window-job-item.job-empty {
+  background-color: #f5f5f5;
+  border: 1px dashed #ddd;
+  color: #999;
+  font-style: italic;
+}
+
+/* Style for accessed job items within windows */
+.window-job-item.job-accessed {
+  background-color: #fff8e1; /* Light amber background */
+  border: 2px solid #ffb300; /* Amber border */
+  font-weight: bold;
+  color: #e65100; /* Deep orange text */
+  box-shadow: 0 0 5px rgba(255, 179, 0, 0.3); /* Subtle glow */
 }
 
 .window-empty {
-  color: #aaa; /* Lighter empty text */
+  color: rgb(205, 122, 122); /* Lighter empty text */
   font-style: italic;
 }
 

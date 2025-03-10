@@ -140,11 +140,12 @@ const StepDetail: React.FC<StepDetailProps> = ({ stepKey, stepInfo }) => {
         </div>
       </div>
 
-      {/* Jobs and Machines Visualization */}
+      {/* Jobs and Machines Visualization with direction data passed */}
       <MachineJobVisualization
         machines={machineList}
         jobs={jobList}
         agentPositions={displayedAgentPositions} // Use calculated positions for visualization
+        currentDirection={direction} // Pass the current direction to highlight accessed job
       />
     </div>
   );

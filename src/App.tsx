@@ -21,7 +21,7 @@ const MainContent: React.FC = () => {
   useEffect(() => {
     const fetchFileList = async () => {
       try {
-        const response = await fetch('/data/data/list_files.json'); // Assuming a backend endpoint or a static json listing files
+        const response = await fetch('/data/processedData/list_files.json'); // Assuming a backend endpoint or a static json listing files
         if (response.ok) {
           const fileList = await response.json();
           if (Array.isArray(fileList)) {
@@ -60,7 +60,7 @@ const MainContent: React.FC = () => {
       try {
         setIsLoading(true);
         setLoadingProgress(0); // Reset loading progress on new file load
-        const response = await fetch(`/data/data/${selectedFile}`);
+        const response = await fetch(`/data/processedData/${selectedFile}`);
         if (!response.ok) {
           throw new Error(`Failed to fetch data from ${selectedFile}`);
         }
