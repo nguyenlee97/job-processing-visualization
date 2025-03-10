@@ -18,6 +18,12 @@ A web-based visualization tool for analyzing job processing environments with in
 - 📈 Real-time data processing for large JSON environment files
 - 🔍 Detailed step inspection with agent positioning and job status
 
+## To-do features
+
+- Graph for reward, full reward, final step, terminated step
+- PDF report export
+- Improve processing performance for big files
+
 ## Installation
 
 ### Prerequisites
@@ -36,7 +42,7 @@ npm install
 # Process sample data (optional)
 node public/data/process_json.cjs input.json 100 output
 
-# Make sure public/data/data folder have environment-steps.json(Manual Input) or list-files.json(Auto-generated)
+# Make sure public/data/processedData folder have environment-steps.json(Manual Input) or list-files.json(Auto-generated)
 
 # Run the application
 npm run dev
@@ -78,18 +84,6 @@ node public/data/process_json.cjs <input_file> <batch_size> <output_prefix>
 
 ## Configuration
 
-### Environment Setup
-
-Place JSON data files in `public/data/`
-
-Update `vite.config.ts` for custom build settings
-
-Environment variables:
-
-```env
-VITE_API_ENDPOINT=http://localhost:3000
-VITE_MAX_STEPS=1000
-```
 
 ### Data Processing Options
 
@@ -145,15 +139,6 @@ This tool addresses the challenge of understanding complex job processing enviro
 - Reinforcement learning researchers
 - Process optimization specialists
 
-## Use Cases
-
-### Algorithm Development:
-
-```bash
-# Visualize Q-learning agent's decisions
-node process_json.cjs qlearning_steps.json 200 qlearn
-```
-
 ### Process Optimization:
 - Identify machine idle times
 - Analyze job allocation efficiency
@@ -161,19 +146,6 @@ node process_json.cjs qlearning_steps.json 200 qlearn
 ### Educational Tool:
 - Demonstrate scheduling concepts
 - Visualize constraint-based processing
-
-## Architecture Overview
-
-```mermaid
-graph TD
-A[Raw JSON Data] --> B{Data Processor}
-B --> C[Batch Files]
-B --> D[CSV Metrics]
-C --> E[React App]
-E --> F[State Manager]
-F --> G[Visualization Components]
-G --> H[User Interface]
-```
 
 ## Contributing
 
